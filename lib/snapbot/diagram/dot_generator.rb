@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "snapbot/diagram/dot_generator/relationship"
-require "active_record"
+require "snapbot/reflector"
+require "snapbot/diagram/dot_generator/relationship"
 
 if defined?(::RSpec)
+  require "snapbot/rspec/lets"
   require "binding_of_caller"
-  require_relative "snapbot/rspec/lets"
 end
 
 module Snapbot
@@ -13,9 +13,8 @@ module Snapbot
     # Get a visual handle on what small constellations of objects we're creating
     # in specs
     class DotGenerator
-      def initialize(label: "g", output_filename: "tmp/models.svg", attrs: false, ignore_lets: %i[])
+      def initialize(label: "g", attrs: false, ignore_lets: %i[])
         @label = label
-        @output_filename = output_filename
         @options = { attrs: attrs }
         @ignore_lets = ignore_lets
 
@@ -30,84 +29,23 @@ module Snapbot
         renderer.result(self.binding)
       end
 
-      def open
-        FileUtils.rm(@output_filename, force: true)
-        IO.popen("dot -Tsvg -o #{@output_filename}", "w") do |pipe|
-          pipe.puts(dot).tap { |_d| File.open("tmp/models.dot", "w+") { |f| f.write(dot) } }
-        end
-
-        warn "Written to #{@output_filename}"
-        open_command = `which open`.chomp
-        `#{open_command} #{@output_filename}` if open_command.present?
-      end
-
       private
 
-      BASE_ACTIVERECORD_CLASS = defined?(ApplicationRecord) ? ApplicationRecord : ActiveRecord::Base
+      delegate :instances, :relationships, :attributes, to: :reflector
+
+      def reflector
+        @reflector ||= Reflector.new
+      end
 
       def collect_lets(example)
         @lets_by_value = RSpec::Lets.new(example).collect.each_with_object({}) do |sym, lets_by_value|
           value = example.send(sym) unless @ignore_lets.include?(sym)
-          lets_by_value[value] = sym if value.is_a?(BASE_ACTIVERECORD_CLASS)
+          lets_by_value[value] = sym if value.is_a?(Reflector::BASE_ACTIVERECORD_CLASS)
         end
-      end
-
-      def models(only_with_records: true)
-        @models ||= begin
-          Rails.application.eager_load! if defined?(Rails)
-          BASE_ACTIVERECORD_CLASS.descendants.reject do |c|
-            c.to_s == "Schema" || (only_with_records && c.count.zero?)
-          end
-        end
-      end
-
-      def instances
-        @instances ||= models.each_with_object([]) do |klass, array|
-          array << klass.all
-        end.flatten
       end
 
       def instance_name(instance)
         "#{instance.model_name}##{instance.id}"
-      end
-
-      # A Set of relationships to other identified entities
-      def relationships
-        @relationships ||= instances.each_with_object(Set.new) do |instance, set|
-          add_relationships(instance, set)
-        end
-      end
-
-      def add_relationships(instance, set)
-        reflect_associations(instance).each do |association|
-          case association
-          when ActiveRecord::Reflection::HasManyReflection
-            records = instance.send(association.name)
-            records.each do |record|
-              set.add(Relationship.new(instance_name(instance), instance_name(record)))
-            end
-          when ActiveRecord::Reflection::HasOneReflection
-            one = instance.send(association.name)
-            set.add(Relationship.new(instance_name(instance), instance_name(one))) if one.present?
-          end
-        end
-      end
-
-      def reflect_associations(instance)
-        (
-          instance.class.reflect_on_all_associations(:has_many).reject { |a| a.name == :schemas } +
-            instance.class.reflect_on_all_associations(:has_one)
-        ).flatten
-      end
-
-      def escape_hash(hash)
-        hash.each_with_object([]) do |(key, value), array|
-          array << "#{key}: #{value.nil? ? "nil" : value}"
-        end.join(", ")
-      end
-
-      def attributes(instance)
-        instance.attributes.to_h.transform_values { |v| v.is_a?(Hash) ? escape_hash(v) : v }
       end
 
       def template
