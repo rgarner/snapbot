@@ -51,6 +51,10 @@ module Snapbot
 
     private
 
+    def instance_name(instance)
+      "#{instance.model_name}##{instance.id}"
+    end
+
     def escape_hash(hash)
       hash.each_with_object([]) do |(key, value), array|
         array << "#{key}: #{value.nil? ? "nil" : value}"

@@ -65,34 +65,34 @@ module Snapbot
             edge[ fontname  =  "ArialMT" , fontsize  =  "7" , dir  =  "both" , arrowsize  =  "0.9" , penwidth  =  "1.0" , labelangle  =  "32" , labeldistance  =  "1.8"];
             rankdir = "TB";
             splines = "spline";
-            <% instances.each do |instance| %>
+            <%- instances.each do |instance| -%>
             "<%= instance_name(instance) %>" [
               label=<
                 <table border="0" cellborder="0">
-                  <% if @lets_by_value[instance] %>
+                  <%- if @lets_by_value[instance] -%>
                   <tr><td fontsize="8"><font face="Monaco" point-size="8">let(:<%= @lets_by_value[instance] %>)</font></td></tr>
-                  <% end %>
+                  <%- end -%>
                   <tr><td><%= instance_name(instance) %></td></tr>
                 </table>
-                <% if @options[:attrs] %>
+                <%- if @options[:attrs] -%>
                 |
                 <table border="0" cellborder="0">
-                  <% attributes(instance).each_pair do |attr, value| %>
+                  <%- attributes(instance).each_pair do |attr, value| -%>
                   <tr>
                     <td align="left" width="200" port="<%= attr %>">
                       <%= attr %>
                       <font face="Arial BoldMT" color="grey60"><%= value.inspect %></font>
                     </td>
                   </tr>
-                  <% end %>
+                  <%- end -%>
                 </table>
-                <% end %>#{" "}
+                <%- end -%>
               >
             ];
             <% end %>
-            <% relationships.each do |relationship| %>
-              "<%= relationship.source %>" -> "<%= relationship.destination %>" [arrowhead = "none", arrowtail = "normal", weight = "6"];
-            <% end %>
+            <%- relationships.each do |relationship| -%>
+            "<%= relationship.source %>" -> "<%= relationship.destination %>" [arrowhead = "none", arrowtail = "normal", weight = "6"];
+            <%- end -%>
           }
         ERB
       end
