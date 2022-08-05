@@ -32,9 +32,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "binding_of_caller", "~> 1.0"
 
-
   version_string = [">= 6.1"]
-  spec.add_runtime_dependency "actionpack",    version_string
+  spec.add_runtime_dependency "actionpack", version_string
   spec.add_runtime_dependency "activerecord", version_string
   spec.add_runtime_dependency "activesupport", version_string
 
