@@ -16,7 +16,6 @@ class Author < ActiveRecord::Base
   has_many :posts
 end
 
-
 RSpec.describe Snapbot::Diagram::DotGenerator do
   subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot]) }
 
