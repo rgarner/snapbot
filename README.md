@@ -1,7 +1,9 @@
 # Snapbot
 
 Snapbot generates little diagrams via `save_and_open_diagram` for you to visualise the small constellations of 
-ActiveRecord objects that you find in feature and integration tests.
+ActiveRecord objects that you find in feature and integration tests. These are most often made by
+ [FactoryBot](https://github.com/thoughtbot/factory_bot) or some other fixture-handling method, but this gem has no 
+ opinions on those (beyond namechecking).
 
 ## Installation
 
