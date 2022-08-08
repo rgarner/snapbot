@@ -18,6 +18,8 @@ jobs:
           - '2.7.6'
 
     steps:
+    - name: Setup Graphviz
+      uses: ts-graphviz/setup-graphviz@v1
     - uses: actions/checkout@v3
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
