@@ -7,6 +7,10 @@ Metrics/BlockLength:
     - spec/**/*_spec.rb
     - snapbot.gemspec
 
+Style/StderrPuts:
+  Exclude:
+    - lib/snapbot/diagram/renderer.rb
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
