@@ -1,5 +1,4 @@
 RSpec.describe Snapbot::Diagram::Renderer do
-  let(:stderr)       { double("STDERR") }
   let(:dot)          { "digraph g { }" }
   subject(:renderer) { Snapbot::Diagram::Renderer.new(dot) }
 
