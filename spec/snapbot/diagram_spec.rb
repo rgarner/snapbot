@@ -6,8 +6,9 @@ RSpec.describe Snapbot::Diagram do
 
     context "the command `open` exists" do
       before do
+        allow(self).to receive(:open_command).and_return("/usr/bin/fakeopencommand")
         allow(Open3).to receive(:capture3).with(
-          "/usr/bin/open tmp/models.svg"
+          "/usr/bin/fakeopencommand tmp/models.svg"
         ).and_return(
           ["", "", double("Process::Status", exitstatus: 0)]
         )
