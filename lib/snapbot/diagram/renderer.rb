@@ -16,6 +16,8 @@ module Snapbot
       def save
         ensure_graphviz
         FileUtils.rm(OUTPUT_FILENAME, force: true)
+        FileUtils.mkdir_p(File.dirname(OUTPUT_FILENAME))
+
         IO.popen("dot -Tsvg -o #{OUTPUT_FILENAME}", "w") do |pipe|
           pipe.puts(@dot)
         end

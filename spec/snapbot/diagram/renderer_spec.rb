@@ -5,8 +5,17 @@ RSpec.describe Snapbot::Diagram::Renderer do
 
   describe "#save" do
     context "graphviz is installed" do
-      before { renderer.save }
-      after  { FileUtils.rm_f("tmp/models.svg") }
+      def clean
+        FileUtils.rm("tmp/models.svg", force: true)
+        FileUtils.rmdir("tmp") if Dir.exist?("tmp")
+      end
+
+      before do
+        clean
+        renderer.save
+      end
+
+      after { clean }
 
       context "the DOT is valid" do
         it "generates SVG to tmp/models.svg" do
