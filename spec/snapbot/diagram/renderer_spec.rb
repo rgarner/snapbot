@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Snapbot::Diagram::Renderer do
   let(:dot)          { "digraph g { }" }
   subject(:renderer) { Snapbot::Diagram::Renderer.new(dot) }
