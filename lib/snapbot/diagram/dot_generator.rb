@@ -40,7 +40,7 @@ module Snapbot
       def collect_lets(example)
         @lets_by_value = RSpec::Lets.new(example).collect.each_with_object({}) do |sym, lets_by_value|
           value = example.send(sym) unless @ignore_lets.include?(sym)
-          lets_by_value[value] = sym if value.is_a?(Reflector::BASE_ACTIVERECORD_CLASS)
+          lets_by_value[value] = sym if value.is_a?(reflector.base_activerecord_class)
         end
       end
 

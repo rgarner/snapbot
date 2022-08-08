@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Snapbot::Diagram do
   describe ".save_and_open_diagram" do
     include Snapbot::Diagram

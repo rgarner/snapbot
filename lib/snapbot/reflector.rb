@@ -5,12 +5,14 @@ require "active_record"
 module Snapbot
   # Reflect models and instances in a way that's useful for generating a diagram
   class Reflector
-    BASE_ACTIVERECORD_CLASS = defined?(ApplicationRecord) ? ApplicationRecord : ActiveRecord::Base
+    def base_activerecord_class
+      defined?(ApplicationRecord) ? ApplicationRecord : ActiveRecord::Base
+    end
 
     def models(only_with_records: true)
       @models ||= begin
         Rails.application.eager_load! if defined?(Rails)
-        BASE_ACTIVERECORD_CLASS.descendants.reject do |c|
+        base_activerecord_class.descendants.reject do |c|
           c.to_s == "Schema" || (only_with_records && c.count.zero?)
         end
       end
