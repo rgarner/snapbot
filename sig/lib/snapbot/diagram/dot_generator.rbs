@@ -1,0 +1,25 @@
+module Snapbot
+  module Diagram
+    # Get a visual handle on what small constellations of objects we're creating
+    # in specs
+    class DotGenerator
+      def initialize: (?label: ::String, ?attrs: bool, ?ignore_lets: Array[Symbol]) -> void
+      def dot: () -> ::String
+
+      @label: String
+      @attrs: bool
+      @ignore_lets: Array[Symbol]
+
+      @options: Hash[Object, Object]
+      @lets_by_value: Hash[Object, Symbol]
+      @reflector: Reflector
+
+      private
+
+      def reflector: () -> Reflector
+      def collect_lets: (::RSpec::Core::ExampleGroup example) -> untyped
+      def instance_name: (ActiveRecord::Base `instance`) -> ::String
+      def template: () -> ::String
+    end
+  end
+end

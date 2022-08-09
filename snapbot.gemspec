@@ -35,7 +35,9 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "activerecord", version_string
   spec.add_runtime_dependency "activesupport", version_string
 
+  spec.add_development_dependency "rbs"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "steep"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

@@ -1,0 +1,38 @@
+module ActiveRecord
+  class Base
+  end
+
+  module Reflection
+    class AssociationReflection
+      def name: () -> Symbol
+    end
+  end
+end
+
+module Snapbot
+  # Reflect models and instances in a way that's useful for generating a diagram
+  class Reflector
+    ACTIVERECORD_IGNORE: ::Array[::Regexp]
+
+    @models: Array[Class]
+    @instances: Array[ActiveRecord::Base]
+    @relationships: Set[Relationship]
+
+    def base_activerecord_class: () -> Class
+    def models: (?only_with_records: bool) -> Array[Class]
+    def activerecord_ignore?: (Class klass) -> bool
+    def instances: () -> Array[ActiveRecord::Base]
+
+    # A Set of relationships to other identified entities
+    def relationships: () -> Set[Relationship]
+    def add_relationships: (ActiveRecord::Base `instance`, Set[Relationship] set) -> untyped
+    def reflect_associations: (ActiveRecord::Base `instance`) -> Array[ActiveRecord::Reflection::AssociationReflection]
+    def attributes: (ActiveRecord::Base `instance`) -> Hash[Symbol, Object]
+
+    private
+
+    def instance_name: (ActiveRecord::Base `instance`) -> ::String
+    # Remains commented out, as is private, and https://github.com/ruby/rbs/issues/734#issuecomment-1192607498
+    # def escape_hash: (Hash[Symbol, Object] hash) -> untyped
+  end
+end

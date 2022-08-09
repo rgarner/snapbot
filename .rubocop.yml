@@ -1,6 +1,9 @@
 AllCops:
   TargetRubyVersion: 2.6
   SuggestExtensions: false
+  Exclude:
+    - Steepfile
+
 
 Metrics/AbcSize:
   Exclude:

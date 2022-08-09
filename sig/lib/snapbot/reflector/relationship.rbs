@@ -1,0 +1,14 @@
+module Snapbot
+  class Reflector
+    # A source/destination-based relationship
+    class Relationship
+      attr_accessor source: ::String
+
+      attr_accessor destination: ::String
+
+      def initialize: (::String source, ::String destination) -> void
+
+      def ==: (Relationship other) -> bool
+    end
+  end
+end

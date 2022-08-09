@@ -1,0 +1,25 @@
+module RSpec
+  module Core
+    class ExampleGroup
+    end
+  end
+end
+
+module Snapbot
+  module RSpec
+    # Collect RSpec `let`s for a given example and all her parents
+    class Lets
+      @lets: Array[Symbol]
+      @lets_by_value: Hash[Object, Symbol]
+      @example: ::RSpec::Core::ExampleGroup
+
+      def initialize: (::RSpec::Core::ExampleGroup example) -> void
+
+      def collect: () -> Array[Symbol]
+
+      private
+
+      def _collect: (::RSpec::Core::ExampleGroup klass, Array[Symbol] lets) -> Array[Symbol]
+    end
+  end
+end
