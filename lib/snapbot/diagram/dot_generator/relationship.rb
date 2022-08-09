@@ -11,7 +11,7 @@ module Snapbot
         self.destination = destination
       end
 
-      def equals(other)
+      def ==(other)
         source == other.source && destination == other.destination
       end
     end

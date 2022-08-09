@@ -13,9 +13,19 @@ module Snapbot
       @models ||= begin
         Rails.application.eager_load! if defined?(Rails)
         base_activerecord_class.descendants.reject do |c|
-          c.to_s == "Schema" || (only_with_records && c.count.zero?)
+          activerecord_ignore?(c) || (only_with_records && c.count.zero?)
         end
       end
+    end
+
+    ACTIVERECORD_IGNORE = [
+      /^Schema$/,
+      /^HABTM_/,
+      /^ActiveRecord::InternalMetadata$/,
+      /^ActiveRecord::SchemaMigration$/
+    ].freeze
+    def activerecord_ignore?(klass)
+      ACTIVERECORD_IGNORE.any? { |r| klass.name =~ r }
     end
 
     def instances
@@ -43,7 +53,8 @@ module Snapbot
     def reflect_associations(instance)
       (
         instance.class.reflect_on_all_associations(:has_many).reject { |a| a.name == :schemas } +
-          instance.class.reflect_on_all_associations(:has_one)
+          instance.class.reflect_on_all_associations(:has_one) +
+          instance.class.reflect_on_all_associations(:has_and_belongs_to_many)
       ).flatten
     end
 

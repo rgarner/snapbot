@@ -2,10 +2,18 @@ AllCops:
   TargetRubyVersion: 2.6
   SuggestExtensions: false
 
+Metrics/AbcSize:
+  Exclude:
+    - spec/support/fixture_database.rb
+
 Metrics/BlockLength:
   Exclude:
     - spec/**/*_spec.rb
     - snapbot.gemspec
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/support/fixture_database.rb
 
 Style/StderrPuts:
   Exclude:
