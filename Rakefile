@@ -9,6 +9,8 @@ RSpec::Core::RakeTask.new(:spec)
 
 require "rubocop/rake_task"
 
-RuboCop::RakeTask.new
+RuboCop::RakeTask.new do |t|
+  t.options = ["-d"]
+end
 
 task default: %i[spec rubocop steep:check]
