@@ -4,7 +4,6 @@ AllCops:
   Exclude:
     - Steepfile
 
-
 Metrics/AbcSize:
   Exclude:
     - spec/support/fixture_database.rb
