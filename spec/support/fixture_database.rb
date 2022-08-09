@@ -2,6 +2,10 @@
 
 require "sqlite3"
 
+class Abstract < ActiveRecord::Base
+  self.abstract_class = true
+end
+
 class Blog < ActiveRecord::Base
   has_many :posts
 end

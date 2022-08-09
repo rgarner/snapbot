@@ -26,7 +26,7 @@ module Snapbot
       /^ActiveRecord::SchemaMigration$/
     ].freeze
     def activerecord_ignore?(klass)
-      ACTIVERECORD_IGNORE.any? { |r| klass.name =~ r }
+      ACTIVERECORD_IGNORE.any? { |r| klass.name =~ r } || klass.abstract_class
     end
 
     def instances
