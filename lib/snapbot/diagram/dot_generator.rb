@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "snapbot/reflector"
-require "snapbot/diagram/dot_generator/relationship"
 
 if defined?(::RSpec)
   require "snapbot/rspec/lets"

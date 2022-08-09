@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_record"
+require "snapbot/reflector/relationship"
 
 module Snapbot
   # Reflect models and instances in a way that's useful for generating a diagram
