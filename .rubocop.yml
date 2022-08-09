@@ -3,7 +3,7 @@ AllCops:
   SuggestExtensions: false
   Exclude:
     - Steepfile
-
+    - vendor/bundle/**/*
 
 Metrics/AbcSize:
   Exclude:
