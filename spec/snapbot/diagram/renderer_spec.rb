@@ -8,7 +8,7 @@ RSpec.describe Snapbot::Diagram::Renderer do
     context "graphviz is installed" do
       def clean
         FileUtils.rm("tmp/models.svg", force: true)
-        FileUtils.rmdir("tmp") if Dir.exist?("tmp")
+        FileUtils.rm_f("tmp")
       end
 
       before do

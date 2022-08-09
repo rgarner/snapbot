@@ -1,9 +1,13 @@
 AllCops:
   TargetRubyVersion: 2.6
   SuggestExtensions: false
+  NewCops: enable
   Exclude:
     - Steepfile
     - vendor/bundle/**/*
+
+Gemspec/RequireMFA:
+  Enabled: false
 
 Metrics/AbcSize:
   Exclude:
