@@ -8,16 +8,20 @@ module Snapbot
   # Requires Graphviz. Optimised for Mac. YMMV.
   module Diagram
     def save_and_open_diagram(**args)
-      args.reverse_merge!(rspec: !!defined?(RSpec))
-      dot = DotGenerator.new(**args).dot
-      filename = Renderer.new(dot).save
+      filename = save_diagram(**args)
 
       unless launchy_present?
-        warn "Cannot open diagram – install `launchy`. File saved to #{filename}"
+        warn "Cannot open diagram – install `launchy`."
         return
       end
 
-      Launchy.open(Renderer::OUTPUT_FILENAME)
+      Launchy.open(filename)
+    end
+
+    def save_diagram(**args)
+      args.reverse_merge!(rspec: !!defined?(RSpec))
+      dot = DotGenerator.new(**args).dot
+      Renderer.new(dot).save
     end
 
     def launchy_present?

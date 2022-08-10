@@ -32,7 +32,7 @@ For RSpec, you may prefer to put something like
 
 in your `spec/rails_helper` to have it mixed in automatically (to features, in this case).
 
-Use:
+## Usage example
 
 ```
   blog = Blog.create(title: 'My blog')
