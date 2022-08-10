@@ -11,17 +11,26 @@ RSpec.describe Snapbot::Diagram::Renderer do
         FileUtils.rm_f("tmp")
       end
 
-      before do
-        clean
-        renderer.save
-      end
-
-      after { clean }
+      before { clean }
+      after  { clean }
 
       context "the DOT is valid" do
-        it "generates SVG to tmp/models.svg" do
-          content = File.read("tmp/models.svg")
-          expect(content).to include("svg")
+        context "no filename is given" do
+          before { renderer.save }
+
+          it "generates SVG to tmp/models.svg" do
+            content = File.read("tmp/models.svg")
+            expect(content).to include("svg")
+          end
+        end
+
+        context "a filename is given" do
+          before { renderer.save("tmp/downhere/blog.svg") }
+
+          it "generates SVG to tmp/downhere/blog.svg" do
+            content = File.read("tmp/downhere/blog.svg")
+            expect(content).to include("svg")
+          end
         end
       end
     end

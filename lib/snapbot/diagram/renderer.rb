@@ -7,23 +7,23 @@ module Snapbot
     # Render some DOT via Graphviz dot command line
     class Renderer
       INSTALL_GRAPHVIZ_URL = "https://graphviz.org/download/#executable-packages"
-      OUTPUT_FILENAME      = "tmp/models.svg"
+      DEFAULT_OUTPUT_FILENAME = "tmp/models.svg"
 
       def initialize(dot)
         @dot = dot
       end
 
-      def save
+      def save(path = DEFAULT_OUTPUT_FILENAME)
         ensure_graphviz
-        FileUtils.rm(OUTPUT_FILENAME, force: true)
-        FileUtils.mkdir_p(File.dirname(OUTPUT_FILENAME))
+        FileUtils.rm(path, force: true)
+        FileUtils.mkdir_p(File.dirname(path))
 
-        IO.popen("dot -Tsvg -o #{OUTPUT_FILENAME}", "w") do |pipe|
+        IO.popen("dot -Tsvg -o #{path}", "w") do |pipe|
           pipe.puts(@dot)
         end
 
-        warn "Written to #{OUTPUT_FILENAME}"
-        OUTPUT_FILENAME
+        warn "Written to #{path}"
+        path
       end
 
       private

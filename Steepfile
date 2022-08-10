@@ -26,7 +26,7 @@ target :lib do
     # lib/snapbot/diagram/renderer.rb:21:58: [error] The method cannot be called with a block
     # │ Diagnostic ID: Ruby::UnexpectedBlockGiven
     # │
-    # └         IO.popen("dot -Tsvg -o #{OUTPUT_FILENAME}", "w+") do |pipe|
+    # └         IO.popen("dot -Tsvg -o #{DEFAULT_OUTPUT_FILENAME}", "w+") do |pipe|
     #   ~~~~~~~~~
     #
     # This disables that ^^ but probably a bit too much. Can we restrict to renderer.rb?

@@ -7,17 +7,21 @@ module Snapbot
   # Print the small constellation of objects in your integration test and how they relate.
   # Requires Graphviz. Optimised for Mac. YMMV.
   module Diagram
-    def save_and_open_diagram(**args)
-      args.reverse_merge!(rspec: !!defined?(RSpec))
-      dot = DotGenerator.new(**args).dot
-      filename = Renderer.new(dot).save
+    def save_and_open_diagram(path = Renderer::DEFAULT_OUTPUT_FILENAME, **args)
+      filename = save_diagram(path, **args)
 
       unless launchy_present?
-        warn "Cannot open diagram – install `launchy`. File saved to #{filename}"
+        warn "Cannot open diagram – install `launchy`."
         return
       end
 
-      Launchy.open(Renderer::OUTPUT_FILENAME)
+      Launchy.open(filename)
+    end
+
+    def save_diagram(path = Renderer::DEFAULT_OUTPUT_FILENAME, **args)
+      args.reverse_merge!(rspec: !!defined?(RSpec))
+      dot = DotGenerator.new(**args).dot
+      Renderer.new(dot).save(path)
     end
 
     def launchy_present?
