@@ -2,18 +2,19 @@ module Snapbot
   module Diagram
     # Render some DOT via Graphviz dot command line
     class Renderer
-      INSTALL_GRAPHVIZ_URL: "https://graphviz.org/download/#executable-packages"
-      OUTPUT_FILENAME: "tmp/models.svg"
+      INSTALL_GRAPHVIZ_URL:    String
+      DEFAULT_OUTPUT_FILENAME: String
 
       @dot: String
 
       def initialize: (String dot) -> void
-      def save: () -> String
+      def save: (?String path) -> String
 
       private
 
       def graphviz_executable: () -> ::String
       def ensure_graphviz: () -> void
+      def launchy_present?: () -> bool
     end
   end
 end
