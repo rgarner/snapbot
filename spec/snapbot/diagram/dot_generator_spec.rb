@@ -13,6 +13,16 @@ RSpec.describe Snapbot::Diagram::DotGenerator do
     context "there is a database with stuff in it" do
       before(:all) { create_fixture_database }
 
+      include Snapbot::Diagram
+      describe "the categorised post creator" do
+        let(:blog)   { Blog.first }
+        let(:author) { Author.first }
+
+        it "creates posts automatically, categorised" do
+          save_and_open_diagram attrs: true
+        end
+      end
+
       it "has one node definition per model instance in the quoted form Model#<id>" do
         aggregate_failures do
           expect(dot).to include('"Author#1" [')

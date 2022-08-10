@@ -69,7 +69,7 @@ module Snapbot
               label=<
                 <table border="0" cellborder="0">
                   <%- if @lets_by_value[instance] -%>
-                  <tr><td fontsize="8"><font face="Monaco" point-size="8">let(:<%= @lets_by_value[instance] %>)</font></td></tr>
+                  <tr><td><font face="Monaco,Courier,monospace" point-size="8">let(:<%= @lets_by_value[instance] %>)</font></td></tr>
                   <%- end -%>
                   <tr><td><%= instance_name(instance) %></td></tr>
                 </table>
@@ -78,9 +78,11 @@ module Snapbot
                 <table border="0" cellborder="0">
                   <%- attributes(instance).each_pair do |attr, value| -%>
                   <tr>
-                    <td align="left" width="200" port="<%= attr %>">
+                    <td align="left" port="<%= attr %>">
                       <%= attr %>
-                      <font face="Arial BoldMT" color="grey60"><%= value.inspect %></font>
+                    </td>
+                    <td align="left">
+                      <font color="grey50"><%= value.inspect %></font>
                     </td>
                   </tr>
                   <%- end -%>
