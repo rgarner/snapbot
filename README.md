@@ -20,11 +20,17 @@ Install this first, then add the gem to your project's `:test` group in the gemf
   end 
 ```
 
-Add to your tests:
+`include Snapbot::Diagram` in your tests.
 
+For RSpec, you may prefer to put something like
+
+```ruby
+  RSpec.config do |config|
+    config.include Snapbot::Diagram, type: :feature
+  end
 ```
-  include Snapbot::Diagram
-```
+
+in your `spec/rails_helper` to have it mixed in automatically (to features, in this case).
 
 Use:
 
