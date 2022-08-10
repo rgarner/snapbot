@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "open3"
-
 module Snapbot
   module Diagram
     # Render some DOT via Graphviz dot command line
