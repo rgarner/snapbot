@@ -5,7 +5,8 @@ require "snapbot/diagram/dot_generator"
 RSpec.describe Snapbot::Diagram::DotGenerator do
   include FixtureDatabase
 
-  subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot]) }
+  let(:rspec) { false }
+  subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot], rspec: rspec) }
 
   describe "#dot" do
     subject(:dot) { dot_generator.dot }
@@ -39,7 +40,9 @@ RSpec.describe Snapbot::Diagram::DotGenerator do
         end
       end
 
-      context "there is a let corresponding to a model" do
+      context "rspec is enabled and there is a let corresponding to a model" do
+        let(:rspec) { true }
+
         # This spec is a little bit meta; the existence of this `let` will be picked up
         # by binding_of_caller
         let(:blog) { Blog.first }

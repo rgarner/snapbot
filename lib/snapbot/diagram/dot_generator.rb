@@ -12,15 +12,17 @@ module Snapbot
     # Get a visual handle on what small constellations of objects we're creating
     # in specs
     class DotGenerator
-      def initialize(label: "g", attrs: false, ignore_lets: %i[])
+      def initialize(label: "g", attrs: false, ignore_lets: %i[], rspec: false)
         @label = label
         @options = { attrs: attrs }
         @ignore_lets = ignore_lets
 
-        return unless defined?(::RSpec)
-
-        example = binding.of_caller(1).eval("self")
-        collect_lets(example)
+        @lets_by_value = if rspec
+                           example = binding.of_caller(1).eval("self")
+                           collect_lets(example)
+                         else
+                           {}
+                         end
       end
 
       def dot
@@ -37,7 +39,7 @@ module Snapbot
       end
 
       def collect_lets(example)
-        @lets_by_value = RSpec::Lets.new(example).collect.each_with_object({}) do |sym, lets_by_value|
+        RSpec::Lets.new(example).collect.each_with_object({}) do |sym, lets_by_value|
           value = example.send(sym) unless @ignore_lets.include?(sym)
           lets_by_value[value] = sym if value.is_a?(reflector.base_activerecord_class)
         end

@@ -3,7 +3,7 @@ module Snapbot
     # Get a visual handle on what small constellations of objects we're creating
     # in specs
     class DotGenerator
-      def initialize: (?label: ::String, ?attrs: bool, ?ignore_lets: Array[Symbol]) -> void
+      def initialize: (?label: ::String, ?attrs: bool, ?ignore_lets: Array[Symbol], ?rspec: bool) -> void
       def dot: () -> ::String
 
       @label: String
