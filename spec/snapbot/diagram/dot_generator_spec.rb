@@ -38,6 +38,16 @@ RSpec.describe Snapbot::Diagram::DotGenerator do
           expect(dot).to include('"Post#2" -> "Category#2"')
         end
       end
+
+      context "there is a let corresponding to a model" do
+        # This spec is a little bit meta; the existence of this `let` will be picked up
+        # by binding_of_caller
+        let(:blog) { Blog.first }
+
+        it "generates a label for that model" do
+          expect(dot).to include("let(:blog)")
+        end
+      end
     end
   end
 end
