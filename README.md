@@ -11,7 +11,8 @@ ActiveRecord objects that you find in feature and integration tests. These are m
 
 ## Installation
 
-Either `gem install snapbot` or add the gem to your project's `:test` group in the gemfile:
+Snapbot requires [Graphviz](https://graphviz.org/download/#executable-packages), and cannot function without it.
+Install this first, then add the gem to your project's `:test` group in the gemfile:
 
 ```ruby 
   group :test do 
@@ -33,6 +34,28 @@ Use:
   
   save_and_open_diagram
 ```
+
+## RSpec integration
+
+Sometimes it's useful to see the models you created as preconditions vs the ones your code has created in response to
+those. If you use RSpec's [`let` construct](https://relishapp.com/rspec/rspec-core/v/3-11/docs/helper-methods/let-and-let)
+then Snapbot will match these automatically for you and annotate the diagram. For example:
+
+```ruby
+  include Snapbot::Diagram
+  describe "the categorised post creator" do
+    let(:blog)   { create :blog }
+    let(:author) { create :author }
+
+    it "creates posts automatically, categorised" do
+      CategorisedPostCreator.new(blog, author).run
+      save_and_open_diagram
+      expect(Post.count).to eql(2)
+    end
+  end
+```
+
+![annotated diagram](docs/img/models-with-lets.svg)
 
 ## Why?
 
