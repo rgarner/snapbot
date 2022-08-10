@@ -5,7 +5,8 @@ require "snapbot/diagram/dot_generator"
 RSpec.describe Snapbot::Diagram::DotGenerator do
   include FixtureDatabase
 
-  subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot]) }
+  let(:rspec) { false }
+  subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot], rspec: rspec) }
 
   describe "#dot" do
     subject(:dot) { dot_generator.dot }
@@ -36,6 +37,18 @@ RSpec.describe Snapbot::Diagram::DotGenerator do
           expect(dot).to include('"Post#1" -> "Category#1"')
           expect(dot).to include('"Post#2" -> "Category#1"')
           expect(dot).to include('"Post#2" -> "Category#2"')
+        end
+      end
+
+      context "rspec is enabled and there is a let corresponding to a model" do
+        let(:rspec) { true }
+
+        # This spec is a little bit meta; the existence of this `let` will be picked up
+        # by binding_of_caller
+        let(:blog) { Blog.first }
+
+        it "generates a label for that model" do
+          expect(dot).to include("let(:blog)")
         end
       end
     end

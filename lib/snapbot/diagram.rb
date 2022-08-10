@@ -9,6 +9,7 @@ module Snapbot
   # Requires Graphviz. Optimised for Mac. YMMV.
   module Diagram
     def save_and_open_diagram(**args)
+      args.reverse_merge!(rspec: !!defined?(RSpec))
       dot = DotGenerator.new(**args).dot
       filename = Renderer.new(dot).save
 

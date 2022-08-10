@@ -22,6 +22,9 @@ Metrics/MethodLength:
   Exclude:
     - spec/support/fixture_database.rb
 
+Style/DoubleNegation:
+  Enabled: false
+
 Style/StderrPuts:
   Exclude:
     - lib/snapbot/diagram/renderer.rb
