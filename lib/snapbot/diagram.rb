@@ -2,7 +2,6 @@
 
 require "snapbot/diagram/dot_generator"
 require "snapbot/diagram/renderer"
-require "open3"
 
 module Snapbot
   # Print the small constellation of objects in your integration test and how they relate.
@@ -13,17 +12,19 @@ module Snapbot
       dot = DotGenerator.new(**args).dot
       filename = Renderer.new(dot).save
 
-      unless open_command.present?
-        warn "No `open` command available. File saved to #{filename}"
+      unless launchy_present?
+        warn "Cannot open diagram – install `launchy`. File saved to #{filename}"
         return
       end
 
-      _stdout, stderr, status = Open3.capture3("#{open_command} #{filename}")
-      raise stderr unless status.exitstatus.zero?
+      Launchy.open(Renderer::OUTPUT_FILENAME)
     end
 
-    def open_command
-      `which open`.chomp
+    def launchy_present?
+      require "launchy"
+      true
+    rescue LoadError
+      false
     end
   end
 end
