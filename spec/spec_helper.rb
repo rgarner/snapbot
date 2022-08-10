@@ -11,6 +11,9 @@ RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
+  # declare an exclusion filter
+  config.filter_run_excluding manual: true
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
