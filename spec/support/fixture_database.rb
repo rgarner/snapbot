@@ -47,6 +47,19 @@ module FixtureDatabase
     ActiveRecord::Base.establish_connection(config)
     SQLite3::Database.open(config["database"])
 
+    ActiveRecord::Migration.suppress_messages do
+      load_schema
+    end
+
+    blog = Blog.create!(title: "Cooking With Politicians")
+    ids = Author.create!(name: "Ian Duncan Smith")
+    nonsense = Category.create!(name: "nonsense")
+    cycling = Category.create!(name: "cycling")
+    Post.create!(blog: blog, title: "Excellent meals for 37p", author: ids, categories: [nonsense])
+    Post.create!(blog: blog, title: "Eat Your Own Bicycle", author: ids, categories: [nonsense, cycling])
+  end
+
+  def load_schema
     ActiveRecord::Schema.define do
       create_table "blogs", force: :cascade do |t|
         t.string "title"
@@ -73,12 +86,5 @@ module FixtureDatabase
 
       create_table "schema_migrations", force: :cascade
     end
-
-    blog = Blog.create!(title: "Cooking With Politicians")
-    ids = Author.create!(name: "Ian Duncan Smith")
-    nonsense = Category.create!(name: "nonsense")
-    cycling = Category.create!(name: "cycling")
-    Post.create!(blog: blog, title: "Excellent meals for 37p", author: ids, categories: [nonsense])
-    Post.create!(blog: blog, title: "Eat Your Own Bicycle", author: ids, categories: [nonsense, cycling])
   end
 end
