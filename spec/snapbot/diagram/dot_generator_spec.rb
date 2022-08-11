@@ -4,6 +4,7 @@ require "snapbot/diagram/dot_generator"
 
 RSpec.describe Snapbot::Diagram::DotGenerator do
   include FixtureDatabase
+  include_examples "silence warn"
 
   let(:rspec) { false }
   subject(:dot_generator) { Snapbot::Diagram::DotGenerator.new(ignore_lets: %i[dot_generator dot], rspec: rspec) }

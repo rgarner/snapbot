@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Snapbot::Diagram::Renderer do
+  include_examples "silence warn"
+
   let(:dot)          { "digraph g { }" }
   subject(:renderer) { Snapbot::Diagram::Renderer.new(dot) }
 

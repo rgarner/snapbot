@@ -5,6 +5,7 @@ require "launchy"
 RSpec.describe Snapbot::Diagram do
   include Snapbot::Diagram
   include FixtureDatabase
+  include_examples "silence warn"
 
   before(:all) { create_fixture_database }
 
