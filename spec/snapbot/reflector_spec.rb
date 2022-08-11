@@ -2,6 +2,7 @@
 
 RSpec.describe Snapbot::Reflector do
   include FixtureDatabase
+  include_examples "silence warn"
 
   subject(:reflector) { Snapbot::Reflector.new }
 
