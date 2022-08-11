@@ -44,6 +44,8 @@ module Snapbot
 
     def add_relationships(instance, set)
       reflect_associations(instance).each do |association|
+        next unless valid_association?(association) # Skip POROs
+
         records = Array(instance.send(association.name)).compact
         records.each do |record|
           set.add(Relationship.new(instance_name(instance), instance_name(record)))
@@ -64,6 +66,18 @@ module Snapbot
     end
 
     private
+
+    # rubocop:disable Style/RescueModifier
+    def valid_association?(association)
+      # AR7.x raises an ArgumentError when the class is a PORO. AR6.x would fall over
+      # later with NoMethodError on `relation_delegate_class`. Either way, we're not
+      # valid if the association.klass is not descended from our `base_activerecord_class`
+      return true if (association.klass rescue ArgumentError) < base_activerecord_class
+
+      warn "#{association.active_record} -> :#{association.name} is not a valid association. " \
+           "Make sure it inherits from #{base_activerecord_class}"
+    end
+    # rubocop:enable Style/RescueModifier
 
     def instance_name(instance)
       "#{instance.model_name}##{instance.id}"

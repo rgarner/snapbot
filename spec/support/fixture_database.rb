@@ -6,8 +6,17 @@ class Abstract < ActiveRecord::Base
   self.abstract_class = true
 end
 
+# PORO; invalid association
+class InMemoryTag
+  attr_accessor :name
+end
+
 class Blog < ActiveRecord::Base
   has_many :posts
+  # This would never work; in AR6.x you get NoMethodError on `relation_delegate_class`.
+  # In AR7.x you get a useful exception telling you what's wrong.
+  # But we're not a linter. Don't block a diagram from showing up.
+  has_many :in_memory_tags
 end
 
 class Post < ActiveRecord::Base
