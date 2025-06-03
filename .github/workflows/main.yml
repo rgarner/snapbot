@@ -21,6 +21,12 @@ jobs:
     - name: Setup Graphviz
       uses: ts-graphviz/setup-graphviz@v1
     - uses: actions/checkout@v3
+    - name: Generate lockfile from gemspec
+      run: bundle lock --add-platform x86_64-linux
+    - name: Install dependencies
+      run: bundle install --jobs 4 --retry 3
+    - name: Check RuboCop version
+      run: bundle exec rubocop -V
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
