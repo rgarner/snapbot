@@ -11,4 +11,4 @@ require "rubocop/rake_task"
 
 RuboCop::RakeTask.new
 
-task default: %i[spec rubocop steep:check]
+task default: %i[steep:check spec rubocop]
