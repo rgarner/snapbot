@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "A `save_and_open_diagram` tool to visualise ActiveRecord test records"
   spec.homepage = "https://github.com/rgarner/snapbot"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/rgarner/snapbot"
@@ -31,14 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "binding_of_caller", "~> 1.0"
 
   version_string = [">= 6.1"]
-  spec.add_runtime_dependency "actionpack", version_string
-  spec.add_runtime_dependency "activerecord", version_string
-  spec.add_runtime_dependency "activesupport", version_string
-
-  spec.add_development_dependency "launchy"
-  spec.add_development_dependency "rbs"
-  spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "steep"
+  spec.add_dependency "actionpack", version_string
+  spec.add_dependency "activerecord", version_string
+  spec.add_dependency "activesupport", version_string
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
