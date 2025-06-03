@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "launchy"
   spec.add_development_dependency "rbs"
+  spec.add_development_dependency "rubocop", "~> 1.21"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "steep"
 
