@@ -16,7 +16,7 @@ module Snapbot
 
       def _collect(klass, lets)
         lets.tap do
-          next if klass.to_s == "RSpec::ExampleGroups"
+          next if klass.to_s == "RSpec::ExampleGroups" # stop when we hit the top
 
           lets.concat(klass::LetDefinitions.instance_methods(false))
           parent_class = klass.to_s.deconstantize.constantize
