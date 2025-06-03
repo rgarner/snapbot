@@ -2,7 +2,7 @@
 
 require "snapbot/reflector"
 
-if defined?(::RSpec)
+if defined?(RSpec)
   require "snapbot/rspec/lets"
   require "binding_of_caller"
 end
